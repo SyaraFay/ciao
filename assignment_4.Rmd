@@ -61,7 +61,7 @@ print(datasummary)
 
 **Designated place**: type one or two sentences describing this table of a fellow student below. For example, comment on the mean and median growth of both groups. Then stage, commit and push it to their github repository. 
 
-
+The mean is higher, when there are no revolutions, than when there are more than 0 revolutions. This apply for both variables.
 ### Part 3: Make a table summarizing reressions using modelsummary and kable
 
 In question 2, we have seen that growth rates differ markedly between countries that experienced at least one revolution/episode of political stability and countries that did not. 
