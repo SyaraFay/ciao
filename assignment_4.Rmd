@@ -77,7 +77,7 @@ print(ttest)
 
 **Question 3.2**: What is the $p$-value of the test, and what does that mean? Write down your answer below.
 
-The p-value is 0.06871, this means that....
+The p-value is 0.06871, this means that the observed data will occur about 6.871% of the times.
 
 
 We can also control for other factors by including them in a linear model, for example:
@@ -88,7 +88,7 @@ $$
 
 **Question 3.3**: What do you think the purpose of including the variable `rgdp60` is? Look at `?GrowthSW` to find out what the variables mean. 
 
-`rgdp60` is the value of the GDP per capita in 1960, converted to 1960 US dollars. I think the purpose to include the variable `rgdp60` is to......
+`rgdp60` is the value of the GDP per capita in 1960, converted to 1960 US dollars. I think the purpose to include the variable `rgdp60` is to show that countries with different gdp can have different growth rates. 
 
 
 We now want to estimate a stepwise model. Stepwise means that we first estimate a univariate regression $\text{growth}_i = \beta_0 + \beta_1 \cdot \text{treat}_i + \epsilon_i$, and in each subsequent model, we add one control variable. 
@@ -118,7 +118,8 @@ list(model1, model2, model3, model4) |>
 
 **Question 3.6**: According to this analysis, what is the main driver of economic growth? Why?
 
-According to this statistic, the main driver of economic growth is.... because...
+According to this statistic, the main driver of economic growth is tradeshare, as it has the largest number out of all the variables. 
+
 
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
