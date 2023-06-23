@@ -4,9 +4,9 @@ title: |
   | Introduction to Applied Data Science
   | 2022-2023
 author: |
-  | Monsif Er Raqioui
-  | m.erraqioui@students.uu.nl
-  | https://github.com/Monsiff
+  | Syara Letwory
+  | s.f.letwory@students.uu.nl
+  | http://www.github.com/SyaraFay
 date: April 2023
 urlcolor: purple
 linkcolor: purple
@@ -32,7 +32,7 @@ This interpretation will not be graded, but a Github shows the contributors to a
 
 **Question 1.1**: Fill in the __github username__ of the class mate to whose repository you have contributed. 
 
-[Fill in here]
+
 
 ### Part 2: Analyzing various linear models
 
@@ -52,7 +52,11 @@ One of the variables in the dataset is `revolutions`, the number of revolutions,
 ```{r}
 library(modelsummary); library(tidyverse)
 
-# write your code here
+GrowthSW$treat <- ifelse(GrowthSW$revolutions > 0, "Revolutions more than 0", "Revolutions equal to 0")
+
+datasummary <- datasummary(growth + rgdp60 ~ treat*(Mean + median + sd + min + max), data = GrowthSW)
+
+print(datasummary)
 ```
 
 **Designated place**: type one or two sentences describing this table of a fellow student below. For example, comment on the mean and median growth of both groups. Then stage, commit and push it to their github repository. 
@@ -65,11 +69,16 @@ In question 2, we have seen that growth rates differ markedly between countries 
 **Question 3.1**: Try to make this more precise this by performing a t-test on the variable growth according to the group variable you have created in the previous question. 
 
 ```{r}
-# write t test here
+NoRevolutions <- subset(GrowthSW$growth, GrowthSW$treat == "Revolutions equal to 0")
+Revolutions <- subset(GrowthSW$growth, GrowthSW$treat == "Revolutions more than 0")
 
+ttest <- t.test(NoRevolutions, Revolutions)
+print(ttest)
 ```
 
 **Question 3.2**: What is the $p$-value of the test, and what does that mean? Write down your answer below.
+
+The p-value is 0.06871, this means that....
 
 
 We can also control for other factors by including them in a linear model, for example:
@@ -80,13 +89,20 @@ $$
 
 **Question 3.3**: What do you think the purpose of including the variable `rgdp60` is? Look at `?GrowthSW` to find out what the variables mean. 
 
+`rgdp60` is the value of the GDP per capita in 1960, converted to 1960 US dollars. I think the purpose to include the variable `rgdp60` is to......
+
 
 We now want to estimate a stepwise model. Stepwise means that we first estimate a univariate regression $\text{growth}_i = \beta_0 + \beta_1 \cdot \text{treat}_i + \epsilon_i$, and in each subsequent model, we add one control variable. 
 
 **Question 3.4**: Write four models, titled `model1`, `model2`, `model3`, `model4` (using the `lm` function) to memory. Hint: you can also use the `update` function to add variables to an already existing specification.
 
 ```{r}
+model1 <- lm(growth ~ treat, data = GrowthSW)
+model2 <- update(model1, . ~ . + rgdp60)
+model3 <- update(model2, . ~ . + tradeshare)
+model4 <- update(model3, . ~ . + education)
 
+list(model1, model2, model3, model4)
 ```
 
 Now, we put the models in a list, and see what `modelsummary` gives us:
@@ -94,9 +110,8 @@ Now, we put the models in a list, and see what `modelsummary` gives us:
 ```{r}
 list(model1, model2, model3, model4) |>
   modelsummary(stars=T,
-# edit this to remove the statistics other than R-squared
-# and N
-) 
+               statistic = NULL,
+               gof_map = c("r.squared", "nobs"))
 
 ```
 
@@ -104,19 +119,27 @@ list(model1, model2, model3, model4) |>
 
 **Question 3.6**: According to this analysis, what is the main driver of economic growth? Why?
 
+According to this statistic, the main driver of economic growth is.... because...
+
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
 ```{r}
 library(kableExtra)
 list(model1, model2, model3, model4) |>
-  modelsummary(stars=T, gof_map = c("nobs", "r.squared")) 
-# use functions from modelsummary to edit this table
+  modelsummary(stars=T, gof_map = c("nobs", "r.squared")) |>
+   kableExtra::row_spec(3:4, background = 'red', color = 'white')
+
 ```
 
 **Question 3.8**: Write a piece of code that exports this table (without the formatting) to a Word document. 
 
 ```{r}
+doc <- read_docx() %>%
+  body_add_flextable(value = table_output)
 
+# Save the Word document
+output_file <- "output.docx"
+print(doc, target = output_file)
 ```
 
 ## The End
