@@ -55,7 +55,8 @@ library(modelsummary); library(tidyverse)
 # write your code here
 ```
 
-**Designated place**: Comparing countries with no revolutions to countries with one or more the table shows that countries with revolution have higher values, compared to countries with one or more revolutions. For example, the mean of countries with revolutions is 2.46 while the mean of countries with one or more revolutions has a mean of 1.68.
+
+**Designated place**: Comparing countries with no revolutions to countries with one or more the table shows that countries with revolution have higher values, compared to countries with one or more revolutions. For example, the mean of countries with revolutions is 2.46 while the mean of countries with one or more revolutions has a mean of 1.68. we also have two variables as you can see.
 
 
 ### Part 3: Make a table summarizing reressions using modelsummary and kable
